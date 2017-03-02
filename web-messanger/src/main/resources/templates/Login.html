@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<p th:text="'Logged User :' + ${session.currentUserName}"></p>
+	<form action="" th:action="@{/login}" method="post">
+		<input type="text" name="user" />
+		<input type="password" name="password" />		
+		<input type="submit" value="Login"/>
+	</form>
+	
+	<form action="" th:action="@{/logout}" method="post">
+		<input type="submit" value="Logout"/>
+	</form>
+	
+	<a th:href="@{/greeting}" th:unless="${session.currentUserName == null}">Go to Greeting</a>
+</body>
+</html>
