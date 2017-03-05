@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Hello WebSocket</title>
-    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/main.css" rel="stylesheet">
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+    <link href="/main.css" rel="stylesheet"></link>
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/bower_components/jquery.cookie/jquery.cookie.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
@@ -15,6 +15,11 @@
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
 <div id="main-content" class="container">
+	<p th:text="'Logged User :' + ${session.currentUserName}"></p>	
+	<form action="" th:action="@{/logout}" method="post">
+		<input id="btnLogout" type="submit" value="Logout"/>
+	</form> 
+	
     <div class="row">
         <div class="col-md-6">
             <form class="form-inline">
@@ -30,15 +35,15 @@
             <form class="form-horizontal">
                 <div class="form-group">
                     <label for="sender">What is your name?</label>
-                    <input type="text" id="sender" class="form-control" placeholder="Your name here...">
+                    <input type="text" id="sender" class="form-control" placeholder="Your name here..." th:value="${session.currentUserName}" disabled>
                     
                     <label for="receiver">Receiver</label>
                     <input type="text" id="receiver" class="form-control" placeholder="Receiver here..."> 
                                        
                     <label for="messagecontent">Message</label>
-                    <input type="text" id="messagecontent" class="form-control" placeholder="Message content here...">    
+                    <input type="text" id="messagecontent" class="form-control" placeholder="Message content here..." />    
                 </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
+                <button id="send" class="btn btn-default" type="submit" disabled>Send</button>
             </form>
         </div>
     </div>

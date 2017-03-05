@@ -2,6 +2,8 @@ package ozden.controllers;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -13,6 +15,7 @@ import ozden.services.MessageService;
 
 @Controller
 public class MessageController {
+	private static final Logger log = LoggerFactory.getLogger(MessageController.class);
 	
 	@Autowired
 	private MessageService messageService;

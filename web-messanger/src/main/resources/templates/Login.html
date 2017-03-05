@@ -3,19 +3,82 @@
 <head>
     <title>Getting Started: Handling Form Submission</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>    
+    <script src="/webjars/jquery/jquery.min.js"></script>    
+
+    <script src="/js/login.js"></script>    
 </head>
 <body>
-	<p th:text="'Logged User :' + ${session.currentUserName}"></p>
-	<form action="" th:action="@{/login}" method="post">
-		<input type="text" name="user" />
-		<input type="password" name="password" />		
-		<input type="submit" value="Login"/>
-	</form>
-	
+	<p th:text="'Logged User :' + ${session.currentUserName}"></p>	
 	<form action="" th:action="@{/logout}" method="post">
-		<input type="submit" value="Logout"/>
-	</form>
+		<input id="btnLogout" type="submit" value="Logout"/>
+	</form> 
 	
-	<a th:href="@{/greeting}" th:unless="${session.currentUserName == null}">Go to Greeting</a>
+	
+	<div id="login-overlay" class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">Welcome to Web-Messanger</h4>
+          </div>
+          <div class="modal-body">
+              <div class="row">
+                  <div class="col-xs-6">
+                      <div class="well">
+                          <form id="loginForm" method="POST" action="" th:action="@{/login}"  novalidate="novalidate">
+                          	  <p>Login Form</p>
+                              <div class="form-group">
+                                  <label for="username" class="control-label">Username</label>
+                                  <input type="text" class="form-control" id="username" name="username" value="" required="" title="Please enter you username" placeholder="example@gmail.com">
+                                  <span class="help-block"></span>
+                              </div>
+                              <div class="form-group">
+                                  <label for="password" class="control-label">Password</label>
+                                  <input type="password" class="form-control" id="password" name="password" value="" required="" title="Please enter your password">
+                                  <span class="help-block"></span>
+                              </div>
+                              <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
+                              <div class="checkbox">
+                                  <label>
+                                      <input type="checkbox" name="remember" id="remember"> Remember login
+                                  </label>
+                              </div>
+                              <button id="btnLogin" type="submit" class="btn btn-success btn-block">Login</button>
+<!--                               <a href="/forgot/" class="btn btn-default btn-block">Help to login</a> -->
+                          </form>
+                      </div>
+                  </div>
+
+                  <div class="col-xs-6">
+                      <div class="well">
+                          <form id="createUserForm" method="POST" action="" th:action="@{/create-user}" novalidate="novalidate">
+						      <p>Create User From</p>                          
+                              <div class="form-group">
+                                  <label for="username" class="control-label">Username</label>
+                                  <input type="text" class="form-control" id="crt-username" name="username" value="" required="" title="Please enter you username" placeholder="example@gmail.com">
+                                  <span class="help-block"></span>
+                              </div>
+                              <div class="form-group">
+                                  <label for="password" class="control-label">Password</label>
+                                  <input type="password" class="form-control" id="crt-password" name="password" value="" required="" title="Please enter your password">
+                                  <span class="help-block"></span>
+                              </div>
+                              <div class="form-group">
+                                  <label for="password" class="control-label">Re-Password</label>
+                                  <input type="password" class="form-control" id="crt-repassword" name="repassword" value="" required="" title="Please enter your password">
+                                  <span class="help-block"></span>
+                              </div>                              
+                              <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
+                              <button type="submit" id="btnCreateUserForm" class="btn btn-success btn-block" >Create User</button>
+                          </form>
+                      </div>
+                  </div>
+                  
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  
 </body>
 </html>

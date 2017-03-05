@@ -3,6 +3,7 @@ var stompClient = null;
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
+    $("#send").prop("disabled", !connected);
     if (connected) {
         $("#conversation").show();
     }
@@ -44,16 +45,33 @@ function disconnect() {
 }
 
 function sendMessage() {
-	$.cookie("receiver", $("#receiver").val());
+	// check if the user connected to the web socket
+	var isConnected = $("#connect").prop("disabled");
+	if (isConnected == false){
+		alert("connect to the service!");
+		return;
+	}
+	
+	var sender = $("#sender").val();
+	var receiver = $("#receiver").val()
+	console.log("receiver is " + receiver);
+	// check if receiver is null
+	if (receiver == null || receiver == undefined || receiver == ""){
+		alert("input receiver!")
+		return;
+	}
+	
+	// set receiver cookie
+	$.cookie("receiver", receiver);
 	
 	var displayMessage = "";
 	displayMessage = "<tr><td style='text-align: right'><small class='sender-receiver'>[sent to " + $("#receiver").val() + "]	</small><strong>" + $("#messagecontent").val() + "</strong</td></tr>";
-    $("#greetings").append(displayMessage);
+    $("#messages").append(displayMessage);
     
     stompClient.send("/app/message", {}, 
     		JSON.stringify(
-    				{'sender': $("#sender").val(),
-    				 'receiver': $("#receiver").val(),
+    				{'sender': sender,
+    				 'receiver': receiver,
     				 'messageContent': $("#messagecontent").val()
     				}
     				));
@@ -70,6 +88,18 @@ function showMessages(message) {
     $("#messages").append(displayMessage);
 }
 
+function logout(){
+	$.post("/logout", 
+			function(res){
+				console.log("user logged out!");
+			}
+	)
+	.fail(function(error){
+		
+	})
+	window.location = "/";
+}
+
 $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
@@ -77,5 +107,6 @@ $(function () {
     $( "#connect" ).click(function() { connect(); });
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendMessage(); });
+    $("#btnLogout").click(function(){ logout(); });
 });
 
