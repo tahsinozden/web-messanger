@@ -2,6 +2,17 @@
 function createUser(){
 	var userName = $("#crt-username").val();
 	var password = $("#crt-password").val();
+	var repassword = $("#crt-repassword").val();
+	
+	if (userName == "" || password == ""){
+		alert("empty username or password!");
+		return;
+	}
+	
+	if (password != repassword){
+		alert("passwords not match!");
+		return;
+	}
 	
 	$.post("/api/create-user", 
 			{ 'username': userName, 'password': password}, 
@@ -20,12 +31,16 @@ function createUser(){
 				$("#crt-repassword").val("");
 	});
 	
-	
 }
 
 function login(){
 	var userName = $("#username").val();
 	var password = $("#password").val();
+	
+	if (userName == "" || password == ""){
+		alert("empty username or password!");
+		return;
+	}
 	
 	$.ajax({
         url : "/login",
@@ -45,7 +60,9 @@ function login(){
     });
 	
 	console.log("login");
-	window.location = "/";
+//	window.location = "/";
+	// set timeout for server to be able to set all session attributes before redirecting to main page
+	setTimeout(function(){window.location = "/";}, 100);
 }
 
 function logout(){

@@ -1,66 +1,84 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Hello WebSocket</title>
-    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
-    <link href="/main.css" rel="stylesheet"></link>
-    <script src="/webjars/jquery/jquery.min.js"></script>
-    <script src="/bower_components/jquery.cookie/jquery.cookie.js"></script>
-    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="/app.js"></script>
+<title>Hello WebSocket</title>
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+<!-- <link rel="stylesheet" -->
+<!-- 	href="bower_components/jquery-ui/themes/base/jquery-ui.css"> -->
+<link href="/main.css" rel="stylesheet"></link>
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/bower_components/jquery.cookie/jquery.cookie.js"></script>
+<script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/app.js"></script>
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
-	<p th:text="'Logged User :' + ${session.currentUserName}"></p>	
-	<form action="" th:action="@{/logout}" method="post">
-		<input id="btnLogout" type="submit" value="Logout"/>
-	</form> 
-	
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="connect">WebSocket connection:</label>
-                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                    </button>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label for="sender">What is your name?</label>
-                    <input type="text" id="sender" class="form-control" placeholder="Your name here..." th:value="${session.currentUserName}" disabled>
-                    
-                    <label for="receiver">Receiver</label>
-                    <input type="text" id="receiver" class="form-control" placeholder="Receiver here..."> 
-                                       
-                    <label for="messagecontent">Message</label>
-                    <input type="text" id="messagecontent" class="form-control" placeholder="Message content here..." />    
-                </div>
-                <button id="send" class="btn btn-default" type="submit" disabled>Send</button>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Chat Window</th>
-                </tr>
-                </thead>
-                <tbody id="messages">
-                </tbody>
-            </table>
-        </div>
-    </div>
-    </form>
-</div>
+	<noscript>
+		<h2 style="color: #ff0000">Seems your browser doesn't support
+			Javascript! Websocket relies on Javascript being enabled. Please
+			enable Javascript and reload this page!</h2>
+	</noscript>
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<p th:text="'Logged User :' + ${session.currentUserName}"
+				class="label label-default"></p>
+			<form action="" th:action="@{/logout}" method="post">
+				<input id="btnLogout" type="submit" value="Logout"
+					class="btn btn-default" />
+			</form>
+		</div>
+	</nav>
+	<br />
+	<br />
+	<div id="main-content" class="container">
+
+		<!-- 		<p th:text="'Logged User :' + ${session.currentUserName}"></p> -->
+		<!-- 		<form action="" th:action="@{/logout}" method="post"> -->
+		<!-- 			<input id="btnLogout" type="submit" value="Logout" /> -->
+		<!-- 		</form> -->
+
+		<div class="row">
+			<div class="col-md-6">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="connect">WebSocket connection:</label>
+						<button id="connect" class="btn btn-default" type="submit">Connect</button>
+						<button id="disconnect" class="btn btn-default" type="submit"
+							disabled="disabled">Disconnect</button>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="sender">What is your name?</label> <input type="text"
+							id="sender" class="form-control" placeholder="Your name here..."
+							th:value="${session.currentUserName}" disabled> <label
+							for="receiver">Receiver</label> <input type="text" id="receiver"
+							class="form-control" placeholder="Receiver here..."> <label
+							for="messagecontent">Message</label> <input type="text"
+							id="messagecontent" class="form-control"
+							placeholder="Message content here..." />
+					</div>
+					<button id="send" class="btn btn-default" type="submit" disabled>Send</button>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<table id="conversation" class="table table-striped">
+					<thead>
+						<tr>
+							<th>Chat Window</th>
+						</tr>
+					</thead>
+					<tbody id="messages">
+					</tbody>
+				</table>
+			</div>
+		</div>
+		</form>
+	</div>
 </body>
 </html>

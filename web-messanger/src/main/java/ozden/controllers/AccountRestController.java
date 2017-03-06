@@ -1,11 +1,13 @@
 package ozden.controllers;
 
-import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -68,6 +70,15 @@ public class AccountRestController {
     	return userService.checkUser(userName);
     }
     
+    @GetMapping("all-users")
+    public List<User> getAllUsers(){
+    	List<User> users = userService.getAllUsers();
+    	users.stream()
+    		.forEach(usr -> usr.setPassword("****"));
+//    		.collect(Collectors.toList());
+    	
+    	return users;
+    }
     
     @SuppressWarnings("unused")
     private static class UserLogin {
